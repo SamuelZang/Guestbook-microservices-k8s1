@@ -14,13 +14,16 @@ spec:
     run: zipkin-service
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: zipkin-service
   labels:
     run: zipkin-service
 spec:
+  selector:
+   matchLabels:
+     run: zipkin-service 
   replicas: 1
   template:
     metadata:
@@ -29,7 +32,7 @@ spec:
     spec:
       containers:
       - name: zipkin-service
-        image: art.local:8081/docker/guestbook-microservices-k8s/zipkin-service:latest
+        image: art.local:8081/docker-local/guestbook-microservices-k8s/zipkin-service:latest
         env:
           - name: ZIPKIN_SERVER
             value: "192.168.99.100"

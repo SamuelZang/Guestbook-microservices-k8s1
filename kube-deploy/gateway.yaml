@@ -14,13 +14,16 @@ spec:
     run: gateway-service
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: gateway-service
   labels:
     run: gateway-service
 spec:
+  selector:
+    matchLabels:
+      run: gateway-service 
   replicas: 1
   template:
     metadata:
@@ -29,7 +32,7 @@ spec:
     spec:
       containers:
       - name: gateway-service
-        image: art.local:8081/docker/guestbook-microservices-k8s/gateway-service:latest
+        image: art.local:8081/docker-local/guestbook-microservices-k8s/gateway-service:latest
         ports:
         - containerPort: 8765
           protocol: TCP

@@ -14,13 +14,16 @@ spec:
     run: guestbook-service
   type: NodePort
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: guestbook-service
   labels:
     run: guestbook-service
 spec:
+  selector:
+   matchLabels:
+     run: guestbook-service 
   replicas: 1
   template:
     metadata:
@@ -29,7 +32,7 @@ spec:
     spec:
       containers:
       - name: guestbook-service
-        image: art.local:8081/docker/guestbook-microservices-k8s/guestbook-service:latest
+        image: art.local:8081/docker-local/guestbook-microservices-k8s/guestbook-service:latest
         env:
           - name: ZIPKIN_SERVER
             value: "192.168.99.100"
